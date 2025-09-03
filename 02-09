@@ -1,0 +1,192 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPt4wMb4K5hCJIMqrlE46Bk",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/luisDaviSantana/ANALISE_ALGORITMO_3semestre/blob/main/02-09\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "###Classe para gerar objetos"
+      ],
+      "metadata": {
+        "id": "wlKQPNe9jn7x"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "'''\n",
+        "Classe para gerar objetos do tipo Pessoa\n",
+        "Os objetos serão instanciados recebendo valor para os atributos\n",
+        "poderão executar os métodos\n",
+        "'''\n",
+        "\n",
+        "from datetime import datetime\n",
+        "\n",
+        "class Pessoa:\n",
+        "  def __init__(self): #método\n",
+        "    self.nome = input('Nome: ')\n",
+        "    self.nasc = (input('Insira sua data de nascimento (DD/MM/AAAA): '))\n",
+        "    self.idade = self.calcularIdade(self.nasc)\n",
+        "    self.altura = float(input('Altura: '))\n",
+        "    self.peso = float(input('Peso: '))\n",
+        "    self.sexo = input('Sexo: ')\n",
+        "\n",
+        "# método para exibir os dados do objeto\n",
+        "  def exibirDados(self):\n",
+        "    print(f'Nome: {self.nome}')\n",
+        "    print(f'Idade: {self.calcularIdade(self.nasc)}')\n",
+        "    print(f'Altura: {self.altura}')\n",
+        "    print(f'Peso: {self.peso}')\n",
+        "    print(f'Sexo: {self.sexo}')\n",
+        "\n",
+        "\n",
+        "  def mostrarDadosLinha(self):\n",
+        "    print(f'{self.nome} possui {self.altura} de altura com peso de {self.peso}kg, sendo do sexo {self.sexo}')\n",
+        "    print(f'Idade: Indivíduo de {self.calcularIdade(self.nasc)} anos, portanto ele é {self.classificarIdade()}')\n",
+        "    print(f'IMC: {self.calcularIMC():.3f} - {self.classificarIMC()}')\n",
+        "\n",
+        "\n",
+        "  def calcularIMC(self):\n",
+        "    imc = self.peso / self.altura**2\n",
+        "    return imc\n",
+        "\n",
+        "  def classificarIMC(self):\n",
+        "    imc = self.calcularIMC()\n",
+        "\n",
+        "    if imc <= 18.5:\n",
+        "      return \"Baixo Peso\"\n",
+        "    elif imc < 24.9:\n",
+        "      return \"Peso normal\"\n",
+        "    elif imc < 34.9:\n",
+        "      return \"Obesidade Grau I\"\n",
+        "    elif imc < 39.9:\n",
+        "      return \"Obesidade Grau II\"\n",
+        "    else:\n",
+        "      return  \"Obesidade Grau III\"\n",
+        "\n",
+        "  def classificarIdade(self):\n",
+        "    idade = self.idade\n",
+        "    if idade < 2:\n",
+        "      return \"Bebê.\"\n",
+        "    elif idade < 13:\n",
+        "      return \"Criança\"\n",
+        "    elif idade < 19:\n",
+        "      return \"Adolescente\"\n",
+        "    elif idade < 65:\n",
+        "      return \"Adulto\"\n",
+        "    else:\n",
+        "      return \"Idoso\"\n",
+        "\n",
+        "  #Método para calcular a idade da pessoa\n",
+        "  def calcularIdade(self, dataNasc):\n",
+        "    dataNasc = datetime.strptime(dataNasc, '%d/%m/%Y')\n",
+        "    dataAtual = datetime.now() #Obtém a data atual\n",
+        "    diferencaData = dataAtual - dataNasc\n",
+        "    dias = diferencaData.days #Qnt em dias\n",
+        "    idade = int(dias)/365.25  #ano bissexto\n",
+        "    return idade\n"
+      ],
+      "metadata": {
+        "id": "ySFI0OhRj51l"
+      },
+      "execution_count": 57,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "##Classe para testar a criação dos objetos em memória"
+      ],
+      "metadata": {
+        "id": "Dy2GvQfymuIw"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "pessoa = Pessoa() #aqui cria o objeto\n",
+        "pessoa.mostrarDadosLinha() #invoke para o método que exibi os dados"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "wOHUxXuHmzy3",
+        "outputId": "e60b9199-1adf-4843-eb86-56414d07b82a"
+      },
+      "execution_count": 59,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Nome: Luis\n",
+            "Insira sua data de nascimento (DD/MM/AAAA): 20/01/2006\n",
+            "Altura: 1.78\n",
+            "Peso: 120\n",
+            "Sexo: Masculino\n",
+            "Luis possui 1.78 de altura com peso de 120.0kg, sendo do sexo Masculino\n",
+            "Idade: Indivíduo de 19.619438740588638 anos, portanto ele é Adulto\n",
+            "IMC: 37.874 - Obesidade Grau II\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "xZ7XJcQI12VD"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "kfgIJ8NqqNZg"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "ivDtW2jTp6Gd"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "CWX8l50Oox4o"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
